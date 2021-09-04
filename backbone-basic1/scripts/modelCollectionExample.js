@@ -6,7 +6,25 @@ StudentModel = Backbone.Model.extend({
 
 StudentCollection = Backbone.Collection.extend({
   model: StudentModel,
-  initialize: function () {},
+  initialize: function () {
+    this.bindEvents();
+  },
+  bindEvents: function () {
+    this.on('change:faculty', function (model) {
+      console.log(
+        'The faculty was changed to ' +
+          model.get('faculty') +
+          ' for student ' +
+          model.get('name')
+      );
+    });
+    this.on('add', function (model) {
+      console.log('The freaky student was added ' + model.get('name'));
+    });
+    this.on('remove', function (model) {
+      console.log('OMG, the student was removed ' + model.get('name'));
+    });
+  },
 });
 
 $(document).ready(function () {
